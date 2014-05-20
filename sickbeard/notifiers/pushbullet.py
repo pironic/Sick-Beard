@@ -43,15 +43,15 @@ class PushbulletNotifier:
         """
 
         if not apiKey:
-            apiKey = sickbeard.PUSHBULLET_userKey
+            apiKey = sickbeard.PUSHBULLET_USERKEY
 
         # build up the URL and parameters
         msg = msg.strip()
 
         data = urllib.urlencode({
             'type': 'note',
-            'title': title,
-            'body': msg.encode('utf-8')
+            'title': 'Sickbeard',
+            'body': title + ": " + msg.encode('utf-8')
             })
         password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
         password_mgr.add_password(None, API_URL, apiKey, "")
@@ -99,7 +99,7 @@ class PushbulletNotifier:
 
         # fill in omitted parameters
         if not apiKey:
-            apiKey = sickbeard.PUSHBULLET_apiKey
+            apiKey = sickbeard.PUSHBULLET_USERKEY
 
         logger.log(u"PUSHBULLET: Sending notification for " + message, logger.DEBUG)
 
@@ -119,7 +119,7 @@ class PushbulletNotifier:
             self._notify(notifyStrings[NOTIFY_DOWNLOAD], ep_name)
 
     def test_notify(self, apiKey=None):
-        return self._sendPushbullet("This is a test notification from SickBeard", 'Test', apiKey)
+        return self._sendPushbullet("This is a test notification from SickBeard", 'Sickbeard', apiKey)
 
     def update_library(self, showName=None):
         pass
